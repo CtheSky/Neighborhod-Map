@@ -1,0 +1,58 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    height: 100%;
+}
+
+/*
+ * sidebar
+ */
+nav {
+    height: 100%;
+    width: 280px;
+    z-index: 1;
+    position: absolute;
+    /* This trasform moves the drawer off canvas. */
+    -webkit-transform: translate(-280px, 0);
+    transform: translate(-280px, 0);
+    /* Optionally, we animate the drawer. */
+    transition: transform 0.3s ease;
+    /* Font and Color */
+    background-color: #060606;
+    color: #8e8a8a;
+    font-style: italic;
+    font-family: Lora,'Times New Roman',serif;
+}
+
+nav.open {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
+#side_bar_trigger {
+    position:absolute;
+    left: 280px;
+    width: 20px;
+    height: 45px;
+    padding-left: 0;
+    opacity: 0.7;
+}
+
+#filter {
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+li {
+    padding-bottom: 10px;
+}

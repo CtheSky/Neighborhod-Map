@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighborhood Map</title>
+
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/zocial.css">
+    <link rel="stylesheet" href="css/bootstrap-input-group.min.css">
+</head>
+<body>
+    <nav id="side_bar" class="open">
+        <button id="side_bar_trigger">
+            <span id="trigger_content" class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <h2>NewYork Museums</h2>
+        <div class="input-group">
+            <input id="filter" type="text" class="form-control" data-bind="value: searchStr">
+            <span class="input-group-btn">
+              <button  id="filter_markers" data-bind="click: filter" class="btn btn-primary" type="button">
+                  <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                  Filter
+              </button>
+            </span>
+        </div>
+        <div id="data_loading_info">Loading data from Four Square...</div>
+        <ul data-bind="foreach: locations">
+            <!-- ko if: isRequired -->
+            <li data-bind="text: name, click: $root.showInfo"></li>
+            <!-- /ko -->
+        </ul>
+    </nav>
+    <div id="map"></div>
+    <script src="js/knockout-3.4.0.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/googleMap.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJAQZikcDpo3jth4X1MHOBhhADqTNbjn4&callback=initMap"></script>
+    <script src="js/fourSquareAPI.js"></script>
+    <script src="js/wikipediaAPI.js"></script>
+    <script src="js/viewModel.js"></script>
+</body>
+</html>
