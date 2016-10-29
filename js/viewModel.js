@@ -115,5 +115,3 @@ function LocationsViewModel(){
     // Initialize map with default locations
     self.init();
 }
-
-ko.applyBindings(new LocationsViewModel());

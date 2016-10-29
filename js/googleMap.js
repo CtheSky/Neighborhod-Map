@@ -5,7 +5,11 @@
 var map;
 var infowindow;
 
-function initMap() {
+function googleError() {
+    alert('Failed to load google map, try refresh.');
+}
+
+function googleSuccess() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 40.7, lng: -74},
         zoom: 15,
@@ -21,6 +25,9 @@ function initMap() {
     });
 
     infowindow = new google.maps.InfoWindow();
+
+    // Binding view model
+    ko.applyBindings(new LocationsViewModel());
 }
 
 function markerBounce(marker){
