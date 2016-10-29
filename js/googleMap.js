@@ -12,6 +12,14 @@ function initMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
     });
+
+    // Resize stuff...
+    google.maps.event.addDomListener(window, "resize", function() {
+       var center = map.getCenter();
+       google.maps.event.trigger(map, "resize");
+       map.setCenter(center);
+    });
+
     infowindow = new google.maps.InfoWindow();
 }
 
