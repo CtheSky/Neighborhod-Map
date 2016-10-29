@@ -47,6 +47,11 @@ nav.open {
     width: 100%;
 }
 
+#location_container {
+    overflow-y: auto;
+    height: calc(100% - 104px);
+}
+
 ul {
     list-style-type: none;
     padding-left: 10px;

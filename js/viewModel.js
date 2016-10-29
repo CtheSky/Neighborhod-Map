@@ -47,7 +47,7 @@ function LocationsViewModel(){
             self.fourSquareLoadingInfo('');
 
             $.each(data.response.venues, function addLocation(index, location){
-                if (index > 22) return;
+                // if (index > 22) return;
                 location.marker = new google.maps.Marker({
                     position: location.location,
                     map: map,
