@@ -7,8 +7,9 @@ function LocationsViewModel(){
 
     self.filterKeyword = ko.observable('');
     self.locations = ko.observableArray();
+    self.fourSquareLoadingInfo = ko.observable();
 
-    // Computed 
+    // Computed
     self.filterLocations = ko.computed(function(){
         if (!self.filterKeyword()) {
             // No filterKeyword set all markers on the map
@@ -40,16 +41,13 @@ function LocationsViewModel(){
 
     // Operations
     self.init = function() {
+        self.fourSquareLoadingInfo('Loading data from FourSquare...');
         $.get(four_square_request_url, function(data) {
             // Get data success, remove loading data info
-            $('#data_loading_info').html('');
+            self.fourSquareLoadingInfo('');
 
             $.each(data.response.venues, function addLocation(index, location){
                 if (index > 22) return;
-                location.isRequired = ko.computed(function(){
-                    if (this.name.includes(self.filterKeyword()))
-                        return true;
-                }, location);
                 location.marker = new google.maps.Marker({
                     position: location.location,
                     map: map,
@@ -64,7 +62,7 @@ function LocationsViewModel(){
                 self.locations.push(location);
             });
         }).fail(function(){
-            $('#data_loading_info').html('Failed to load data from FourSquare.');
+            self.fourSquareLoadingInfo('Failed to load data from FourSquare.');
         });
     };
 
@@ -85,11 +83,6 @@ function LocationsViewModel(){
 
          // Get location info from wikipedia
         content += '<div id="location_info_content">Loading data from wikipedia...</div>';
-
-        var wikiRequestTimeout = setTimeout(function(){
-            $('#location_info_content').html('Failed to load data from Wikipedia.');
-        }, 10000);
-
         $.ajax({
             url: getWikiSearchUrl(location.name),
             dataType: 'jsonp',
@@ -101,10 +94,14 @@ function LocationsViewModel(){
                     var url = 'http://en.wikipedia.org/wiki/' + articleStr;
                     wikiContent += '<li><a href="' + url + '">"'+ articleStr + '"</a></li>';
                 }
+                // Add message if there is no wikipedia link
+                if (articleList.length == 0)
+                    wikiContent += '<li>No wikipedia link of location is available.</li>';
                 wikiContent += '</ul>';
                 $('#location_info_content').html(wikiContent);
-                    clearTimeout(wikiRequestTimeout);
             }
+        }).fail(function (){
+            $('#location_info_content').html('Failed to load data from Wikipedia.');
         });
 
         // Animate marker
