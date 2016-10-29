@@ -17,20 +17,12 @@
             <span id="trigger_content" class="glyphicon glyphicon-chevron-left"></span>
         </button>
         <h2>NewYork Museums</h2>
-        <div class="input-group">
-            <input id="filter" type="text" class="form-control" data-bind="value: searchStr">
-            <span class="input-group-btn">
-              <button  id="filter_markers" data-bind="click: filter" class="btn btn-primary" type="button">
-                  <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-                  Filter
-              </button>
-            </span>
+        <div>
+            <input id="filter" type="text" class="form-control" data-bind="value: filterKeyword" placeholder="filter...">
         </div>
         <div id="data_loading_info">Loading data from Four Square...</div>
-        <ul data-bind="foreach: locations">
-            <!-- ko if: isRequired -->
+        <ul data-bind="foreach: filterLocations">
             <li data-bind="text: name, click: $root.showInfo"></li>
-            <!-- /ko -->
         </ul>
     </nav>
     <div id="map"></div>

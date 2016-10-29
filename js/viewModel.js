@@ -5,8 +5,38 @@
 function LocationsViewModel(){
     var self = this;
 
-    self.searchStr = ko.observable('');
+    self.filterKeyword = ko.observable('');
     self.locations = ko.observableArray();
+
+    // Computed 
+    self.filterLocations = ko.computed(function(){
+        if (!self.filterKeyword()) {
+            // No filterKeyword set all markers on the map
+            for(var i = 0; i < self.locations().length; i++) {
+                self.locations()[i].marker.setMap(map);
+                markerBounce(self.locations()[i].marker);
+            }
+            return self.locations();
+        } else {
+            // Use keyword to filter locations
+            var filterLocations = ko.utils.arrayFilter(self.locations(), function(location) {
+               return location.name.toLowerCase().indexOf(self.filterKeyword().toLowerCase()) !== -1;
+            });
+
+            // Remove all markers
+            for(var i = 0; i < self.locations().length; i++) {
+                self.locations()[i].marker.setMap(null);
+            }
+
+            // Add required markers
+            for(var i = 0; i < filterLocations.length; i++) {
+                filterLocations[i].marker.setMap(map);
+                markerBounce(filterLocations[i].marker);
+            }
+
+            return filterLocations;
+        }
+    });
 
     // Operations
     self.init = function() {
@@ -17,7 +47,7 @@ function LocationsViewModel(){
             $.each(data.response.venues, function addLocation(index, location){
                 if (index > 22) return;
                 location.isRequired = ko.computed(function(){
-                    if (this.name.includes(self.searchStr()))
+                    if (this.name.includes(self.filterKeyword()))
                         return true;
                 }, location);
                 location.marker = new google.maps.Marker({
@@ -26,7 +56,7 @@ function LocationsViewModel(){
                     title: location.name,
                     animation: google.maps.Animation.DROP
                 });
-                location.marker.addListener('click', function toggleBounce(){
+                location.marker.addListener('click', function (){
                     console.log('click marker');
                     markerBounce(location.marker);
                     self.showInfo(location);
@@ -36,17 +66,6 @@ function LocationsViewModel(){
         }).fail(function(){
             $('#data_loading_info').html('Failed to load data from FourSquare.');
         });
-    };
-
-    self.filter = function(){
-        var locations = self.locations();
-        // Remove all markers on the map
-        for(var i = 0; i < locations.length; i++)
-            if (locations[i].isRequired()) {
-                locations[i].marker.setMap(map);
-            } else {
-                locations[i].marker.setMap(null);
-            }
     };
 
     self.showInfo = function (location) {
