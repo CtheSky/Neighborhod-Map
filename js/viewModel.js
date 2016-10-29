@@ -14,7 +14,7 @@ function LocationsViewModel(){
         if (!self.filterKeyword()) {
             // No filterKeyword set all markers on the map
             for(var i = 0; i < self.locations().length; i++) {
-                self.locations()[i].marker.setMap(map);
+                self.locations()[i].marker.setVisible(true);
                 markerBounce(self.locations()[i].marker);
             }
             return self.locations();
@@ -24,14 +24,14 @@ function LocationsViewModel(){
                return location.name.toLowerCase().indexOf(self.filterKeyword().toLowerCase()) !== -1;
             });
 
-            // Remove all markers
+            // Hide all markers
             for(var i = 0; i < self.locations().length; i++) {
-                self.locations()[i].marker.setMap(null);
+                self.locations()[i].marker.setVisible(false);
             }
 
-            // Add required markers
+            // Show required markers
             for(var i = 0; i < filterLocations.length; i++) {
-                filterLocations[i].marker.setMap(map);
+                filterLocations[i].marker.setVisible(true);
                 markerBounce(filterLocations[i].marker);
             }
 
@@ -54,8 +54,8 @@ function LocationsViewModel(){
                     title: location.name,
                     animation: google.maps.Animation.DROP
                 });
+                location.marker.setMap(map);
                 location.marker.addListener('click', function (){
-                    console.log('click marker');
                     markerBounce(location.marker);
                     self.showInfo(location);
                 });
