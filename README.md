@@ -22,7 +22,7 @@ var four_square_request_url = four_square_api_url + '?' + $.param({
 You can find more about search params in (here)[https://developer.foursquare.com/docs/venues/search].
 
 ## Screenshot
-![screenshot](nmap.png)
+![screenshot](screenshot.png)
 
 ## Based on:
 - [Google Map API](https://developers.google.com/maps/documentation/javascript/)
