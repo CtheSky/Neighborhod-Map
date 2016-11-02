@@ -19,7 +19,7 @@ var four_square_request_url = four_square_api_url + '?' + $.param({
         query: 'museum'
 });
 ```
-You can find more about search params in (here)[https://developer.foursquare.com/docs/venues/search].
+You can find more about search params in [here](https://developer.foursquare.com/docs/venues/search).
 
 ## Screenshot
 ![screenshot](screenshot.png)
