@@ -1,5 +1,5 @@
 # Neighborhood-Map
-This is a course project for Udacity Full Stack Web Developer Course.
+A single-page web application, built using the Knockout framework, that displays a Google Map of an area and various points of interest.
 
 ## What it can do?
 - display locations with markers on google map
